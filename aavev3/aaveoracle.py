@@ -15,7 +15,7 @@ class AaveOracle:
         oracle_address: ChecksumAddress = pap.getPriceOracle()
 
         # Reads oracle abi from file
-        with open("./abi/IAaveOracle.json") as f:
+        with open("../abi/IAaveOracle.json") as f:
             self.oracle_abi: list = json.load(f)["abi"]
         self.oracle = w3.eth.contract(address=oracle_address, abi=self.oracle_abi)
 

@@ -16,7 +16,7 @@ class Pool:
         pool_address: ChecksumAddress = pap.getPool()
 
         # Reads lending pool abi from file
-        with open("./abi/IPool.json") as f:
+        with open("../abi/IPool.json") as f:
             self.pool_abi: list = json.load(f)["abi"]
         self.pool: Contract = w3.eth.contract(address=pool_address, abi=self.pool_abi)
 
