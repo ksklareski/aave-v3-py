@@ -12,7 +12,7 @@ class AaveOracle:
         self.w3 = w3
 
         pap: PoolAddressProvider = PoolAddressProvider(self.w3, network)
-        oracle_address: ChecksumAddress = pap.getOracle()
+        oracle_address: ChecksumAddress = pap.getPriceOracle()
 
         # Reads oracle abi from file
         with open("./abi/IAaveOracle.json") as f:
