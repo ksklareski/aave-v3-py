@@ -1,9 +1,17 @@
 import json
+from . import abi
 from eth_typing import ChecksumAddress
 from hexbytes import HexBytes
 from typing import Dict
 from web3 import Web3
 from web3.contract import Contract
+
+# NOTE: Shamelessly stolen from https://stackoverflow.com/a/20885799
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
 
 
 class PoolAddressProvider:
@@ -30,7 +38,8 @@ class PoolAddressProvider:
             raise KeyError
 
         # Reads pool address provider abi from file
-        with open("./abi/IPoolAddressesProvider.json") as f:
+        # with open("./abi/IPoolAddressesProvider.json") as f:
+        with pkg_resources.open_text(abi, "IPoolAddressesProvider.json") as f:
             pap_abi: list = json.load(f)["abi"]
 
         # reads pool address provider contract from chain

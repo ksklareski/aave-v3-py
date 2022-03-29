@@ -1,10 +1,18 @@
 import json
+from . import abi
 from decimal import Decimal
 from eth_typing import ChecksumAddress
 from hexbytes import HexBytes
 from .pooladdressprovider import PoolAddressProvider
 from typing import List
 from web3 import Web3
+
+# NOTE: Shamelessly stolen from https://stackoverflow.com/a/20885799
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
 
 
 class AaveOracle:
@@ -15,7 +23,8 @@ class AaveOracle:
         oracle_address: ChecksumAddress = pap.getPriceOracle()
 
         # Reads oracle abi from file
-        with open("./abi/IAaveOracle.json") as f:
+        # with open("./abi/IAaveOracle.json") as f:
+        with pkg_resources.open_text(abi, "IAaveOracle.json") as f:
             self.oracle_abi: list = json.load(f)["abi"]
         self.oracle = w3.eth.contract(address=oracle_address, abi=self.oracle_abi)
 
