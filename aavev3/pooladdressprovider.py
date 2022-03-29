@@ -1,5 +1,5 @@
 import json
-from eth_typing import ChecksumAddress, HexStr, HexAddress
+from eth_typing import ChecksumAddress
 from hexbytes import HexBytes
 from typing import Dict
 from web3 import Web3
@@ -10,24 +10,18 @@ class PoolAddressProvider:
 
     # Addresses for Pool Address Provider
     PAPADDR: Dict[str, ChecksumAddress] = {
-        "arbitrum": ChecksumAddress(
-            HexAddress(HexStr("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"))
+        "arbitrum": Web3.toChecksumAddress(
+            "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"
         ),
-        "avalanche": ChecksumAddress(
-            HexAddress(HexStr("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"))
+        "avalanche": Web3.toChecksumAddress(
+            "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"
         ),
-        "fantom": ChecksumAddress(
-            HexAddress(HexStr("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"))
+        "fantom": Web3.toChecksumAddress("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"),
+        "harmony": Web3.toChecksumAddress("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"),
+        "optimism": Web3.toChecksumAddress(
+            "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"
         ),
-        "harmony": ChecksumAddress(
-            HexAddress(HexStr("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"))
-        ),
-        "optimism": ChecksumAddress(
-            HexAddress(HexStr("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"))
-        ),
-        "polygon": ChecksumAddress(
-            HexAddress(HexStr("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"))
-        ),
+        "polygon": Web3.toChecksumAddress("0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"),
     }
 
     def __init__(self, w3: Web3, network: str) -> None:
