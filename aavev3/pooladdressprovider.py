@@ -30,7 +30,7 @@ class PoolAddressProvider:
             raise KeyError
 
         # Reads pool address provider abi from file
-        with open("../abi/IPoolAddressesProvider.json") as f:
+        with open("./abi/IPoolAddressesProvider.json") as f:
             pap_abi: list = json.load(f)["abi"]
 
         # reads pool address provider contract from chain

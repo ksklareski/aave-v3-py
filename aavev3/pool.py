@@ -2,7 +2,7 @@ import json
 from decimal import Decimal
 from eth_typing import ChecksumAddress
 from hexbytes import HexBytes
-from pooladdressprovider import PoolAddressProvider
+from .pooladdressprovider import PoolAddressProvider
 from typing import List, Union
 from web3 import Web3
 from web3.contract import Contract
@@ -16,7 +16,7 @@ class Pool:
         pool_address: ChecksumAddress = pap.getPool()
 
         # Reads lending pool abi from file
-        with open("../abi/IPool.json") as f:
+        with open("./abi/IPool.json") as f:
             self.pool_abi: list = json.load(f)["abi"]
         self.pool: Contract = w3.eth.contract(address=pool_address, abi=self.pool_abi)
 
