@@ -2,7 +2,7 @@
 This repo is still a work in progress and is currently UNTESTED. I'm pretty sure the write functions will not work as implemented. Please don't use this repo until this disclaimer is removed!
 
 # AAVE-V3-PY
-The purpose of this repository is to provide wrapper classes around common Aave contracts that reduce boilerplate code. The classes can be found in the aave folder.
+The purpose of this repository is to provide wrapper classes around common Aave contracts that reduce boilerplate code. The classes can be found in the aavev3 folder.
 
 ## Quick Start
 ```
