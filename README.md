@@ -6,11 +6,13 @@ The purpose of this repository is to provide wrapper classes around common Aave 
 
 ## Quick Start
 ```
+from aavev3 import Pool
 from web3 import Web3
-from aavev3 import pool
+
+test_addr = Web3.toChecksumAddress("0xD5CF5F10f7FEa9aB90D4b7a8F556Db78a9eBDb4B")
 
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
-pool_instance = pool.Pool(w3, "polygon")
+pool_instance = Pool(w3, "polygon")
 
-print(pool_instance.getUserAccountData())
+print(pool_instance.getUserAccountData(test_addr))
 ```
