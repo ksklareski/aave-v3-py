@@ -8,6 +8,7 @@ from typing import List, Union
 from web3 import Web3
 from web3.contract import Contract
 
+# NOTE: Shamelessly stolen from https://stackoverflow.com/a/20885799
 try:
     import importlib.resources as pkg_resources
 except ImportError:
