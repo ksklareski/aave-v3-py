@@ -23,12 +23,11 @@ class AaveOracle:
         oracle_address: ChecksumAddress = pap.getPriceOracle()
 
         # Reads oracle abi from file
-        # with open("./abi/IAaveOracle.json") as f:
         with pkg_resources.open_text(abi, "IAaveOracle.json") as f:
             self.oracle_abi: list = json.load(f)["abi"]
         self.oracle = w3.eth.contract(address=oracle_address, abi=self.oracle_abi)
 
-    def getAssetPrice(self, asset: ChecksumAddress) -> Decimal:
+    def getAssetPrice(self, asset: ChecksumAddress) -> int:
         return self.oracle.functions.getAssetPrice(asset).call()
 
     def getAssetsPrices(self, assets: List[ChecksumAddress]) -> List[Decimal]:
