@@ -27,17 +27,22 @@ class AaveOracle:
             self.oracle_abi: list = json.load(f)["abi"]
         self.oracle = w3.eth.contract(address=oracle_address, abi=self.oracle_abi)
 
-    def getAssetPrice(self, asset: ChecksumAddress) -> int:
-        return self.oracle.functions.getAssetPrice(asset).call()
+    def getAssetPrice(self, asset: ChecksumAddress) -> Decimal:
+        return Decimal(self.oracle.functions.getAssetPrice(asset).call())
 
     def getAssetsPrices(self, assets: List[ChecksumAddress]) -> List[Decimal]:
-        return self.oracle.functions.getAssetsPrices(assets).call()
+        prices = self.oracle.functions.getAssetsPrices(assets).call()
+        return [Decimal(p) for p in prices]
 
     def getSourceOfAsset(self, asset: ChecksumAddress) -> ChecksumAddress:
-        return self.oracle.functions.getSourceOfAsset(asset).call()
+        return self.w3.toChecksumAddress(
+            self.oracle.functions.getSourceOfAsset(asset).call()
+        )
 
     def getFallbackOracle(self) -> ChecksumAddress:
-        return self.oracle.functions.getFallbackOracle().call()
+        return self.w3.toChecksumAddress(
+            self.oracle.functions.getFallbackOracle().call()
+        )
 
     def setAssetSources(
         self, assets: List[ChecksumAddress], sources: List[ChecksumAddress]

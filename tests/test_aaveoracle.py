@@ -24,16 +24,20 @@ class Test_AaveOracle:
 
     def test_getAssetPrice(self):
         price = self.oracle.getAssetPrice(self.weth_addr)
-        assert isinstance(price, int), "Price type is not correct"
+        assert isinstance(price, Decimal), "Price type is not correct"
 
     def test_getAssetPrices(self):
         prices = self.oracle.getAssetsPrices([self.usdc_addr, self.weth_addr])
-        assert isinstance(prices, list), "Prices type is not correct"
+        assert isinstance(prices, list), "Prices is not type list"
+        for p in prices:
+            assert isinstance(p, Decimal), "Price is not type Decimal"
 
     def test_getSourceOfAsset(self):
         source = self.oracle.getSourceOfAsset(self.weth_addr)
-        assert isinstance(source, str), "Source type is not correct"
+        assert self.w3.isChecksumAddress(source), "Source is not type ChecksumAddress"
 
     def test_getFallbackOracle(self):
         fallback = self.oracle.getFallbackOracle()
-        assert isinstance(fallback, str), "Fallback type is not correct"
+        assert self.w3.isChecksumAddress(
+            fallback
+        ), "Fallback is not type ChecksumAddress"
