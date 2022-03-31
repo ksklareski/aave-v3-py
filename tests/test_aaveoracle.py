@@ -1,31 +1,30 @@
-import ganache
-
 from aavev3 import AaveOracle
+from base_test import BaseTest
 from decimal import Decimal
 from dotenv import load_dotenv
 from eth_typing import ChecksumAddress
 from web3 import Web3
 from web3.contract import Contract
 
+bt = None
+
 
 def setup_module():
-    ganache.start_ganache()
+    global bt
+    bt = BaseTest()
+    bt.start_ganache()
 
 
 def teardown_module():
-    ganache.stop_ganache()
+    global bt
+    bt.stop_ganache()
 
 
 class Test_AaveOracle:
+    global bt
+
     def setup_method(self, test_method):
-        self.w3: Web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
-        self.usdc_addr = self.w3.toChecksumAddress(
-            "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
-        )
-        self.weth_addr = self.w3.toChecksumAddress(
-            "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
-        )
-        self.oracle: AaveOracle = AaveOracle(self.w3, "polygon")
+        self.oracle: AaveOracle = AaveOracle(bt.w3, "polygon")
 
     def test_init(self):
         assert isinstance(self.oracle, AaveOracle), "Init failed"
@@ -33,31 +32,29 @@ class Test_AaveOracle:
         assert isinstance(self.oracle.oracle, Contract), "Contract init failed"
 
     def test_getAssetPrice(self):
-        price = self.oracle.getAssetPrice(self.weth_addr)
+        price = self.oracle.getAssetPrice(bt.weth_addr)
         assert isinstance(price, Decimal), "Price type is not correct"
 
     def test_getAssetPrices(self):
-        prices = self.oracle.getAssetsPrices([self.usdc_addr, self.weth_addr])
+        prices = self.oracle.getAssetsPrices([bt.usdc_addr, bt.weth_addr])
         assert isinstance(prices, list), "Prices is not type list"
         for p in prices:
             assert isinstance(p, Decimal), "Price is not type Decimal"
 
     def test_getSourceOfAsset(self):
-        source = self.oracle.getSourceOfAsset(self.weth_addr)
-        assert self.w3.isChecksumAddress(source), "Source is not type ChecksumAddress"
+        source = self.oracle.getSourceOfAsset(bt.weth_addr)
+        assert bt.w3.isChecksumAddress(source), "Source is not type ChecksumAddress"
 
     def test_getFallbackOracle(self):
         fallback = self.oracle.getFallbackOracle()
-        assert self.w3.isChecksumAddress(
-            fallback
-        ), "Fallback is not type ChecksumAddress"
+        assert bt.w3.isChecksumAddress(fallback), "Fallback is not type ChecksumAddress"
 
     def test_setAssetSources(self):
         result = self.oracle.setAssetSources(
-            [self.weth_addr],
-            [self.usdc_addr],
-            ganache.admin_user,
+            [bt.weth_addr],
+            [bt.usdc_addr],
+            bt.admin_user,
         )
 
     def test_setFallbackOracle(self):
-        result = self.oracle.setFallbackOracle(self.weth_addr, ganache.admin_user)
+        result = self.oracle.setFallbackOracle(bt.weth_addr, bt.admin_user)
