@@ -45,9 +45,18 @@ class AaveOracle:
         )
 
     def setAssetSources(
-        self, assets: List[ChecksumAddress], sources: List[ChecksumAddress]
+        self,
+        assets: List[ChecksumAddress],
+        sources: List[ChecksumAddress],
+        from_account: ChecksumAddress,
     ) -> HexBytes:
-        return self.oracle.functions.setAssetSources(assets, sources).transact()
+        return self.oracle.functions.setAssetSources(assets, sources).transact(
+            {"from": from_account}
+        )
 
-    def setFallbackOracle(self, fallbackOracle: ChecksumAddress) -> HexBytes:
-        return self.oracle.functions.setFallbackOracle(fallbackOracle).transact()
+    def setFallbackOracle(
+        self, fallbackOracle: ChecksumAddress, from_account: ChecksumAddress
+    ) -> HexBytes:
+        return self.oracle.functions.setFallbackOracle(fallbackOracle).transact(
+            {"from": from_account}
+        )
