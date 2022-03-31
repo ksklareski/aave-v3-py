@@ -13,12 +13,16 @@ from web3 import Web3
 from web3.contract import Contract
 
 p = None
+admin_user = None
 
 
 def setup_module():
     global p
+    global admin_user
+
     load_dotenv(override=True)
     poly_url = os.environ["POLY_URL"]
+    admin_user = os.environ["ADMIN_USER"]
 
     # Start ganache cli
     p = subprocess.Popen(
@@ -35,7 +39,7 @@ def setup_module():
             "-l",
             "8000000",
             "-u",
-            "0x4365F8e70CF38C6cA67DE41448508F2da8825500",
+            admin_user,
         ]
     )
     wait_for_port(port="8545", timeout=10)
@@ -70,8 +74,7 @@ def teardown_module():
 
 
 class Test_AaveOracle:
-
-    admin_user = Web3.toChecksumAddress("0x4365F8e70CF38C6cA67DE41448508F2da8825500")
+    global admin_user
 
     def setup_method(self, test_method):
         self.w3: Web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
@@ -112,8 +115,8 @@ class Test_AaveOracle:
         result = self.oracle.setAssetSources(
             [self.weth_addr],
             [self.usdc_addr],
-            self.admin_user,
+            admin_user,
         )
 
     def test_setFallbackOracle(self):
-        result = self.oracle.setFallbackOracle(self.weth_addr, self.admin_user)
+        result = self.oracle.setFallbackOracle(self.weth_addr, admin_user)
