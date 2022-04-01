@@ -8,7 +8,7 @@ from web3.contract import Contract
 
 class Test_PoolAddressProvider:
     @pytest.fixture(autouse=True)
-    def setup_method_fixture(self, bt):
+    def setup_class_fixture(self, bt):
         self.pap: PoolAddressProvider = PoolAddressProvider(bt.w3, "polygon")
 
     def test_init(self):
