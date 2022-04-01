@@ -18,3 +18,9 @@ class Test_PoolAddressProvider:
     def test_getMarketId(self):
         result = self.pap.getMarketId()
         assert isinstance(result, str)
+
+    def test_getAddress(self, bt):
+        result = self.pap.getAddress(
+            "0x19c860a63258efbd0ecb7d55c626237bf5c2044c26c073390b74f0c13c857433"
+        )
+        assert bt.w3.isChecksumAddress(result)
