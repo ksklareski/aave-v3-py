@@ -65,3 +65,4 @@ def wait_for_port(port, host="localhost", timeout=5.0):
 def stop_ganache():
     global p
     os.kill(p.pid, signal.SIGTERM)
+    time.sleep(5)

@@ -19,7 +19,8 @@ class Test_PoolAddressProvider:
     global bt
 
     def setup_method(self, test_method):
-        self.oracle: PoolAddressProvider = PoolAddressProvider(bt.w3, "polygon")
+        self.pap: PoolAddressProvider = PoolAddressProvider(bt.w3, "polygon")
 
-    def test_test(self):
-        pass
+    def test_getMarketId(self):
+        result = self.pap.getMarketId()
+        assert isinstance(result, str)
