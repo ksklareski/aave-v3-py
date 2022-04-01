@@ -24,3 +24,7 @@ class Test_PoolAddressProvider:
             "0x19c860a63258efbd0ecb7d55c626237bf5c2044c26c073390b74f0c13c857433"
         )
         assert bt.w3.isChecksumAddress(result)
+
+    def test_getPool(self, bt):
+        result = self.pap.getPool()
+        assert bt.w3.isChecksumAddress(result)

@@ -1,6 +1,7 @@
 import os
 import signal
 import socket
+from sqlite3 import Time
 import subprocess
 import time
 
@@ -19,24 +20,34 @@ def start_ganache():
     admin_user = os.environ["ADMIN_USER"]
 
     # Start ganache cli
-    p = subprocess.Popen(
-        [
-            "ganache",
-            "-f",
-            poly_url,
-            "-i",
-            "999",
-            "-e",
-            "1000000",
-            "-p",
-            "8545",
-            "-l",
-            "8000000",
-            "-u",
-            admin_user,
-        ]
-    )
-    wait_for_port(port="8545", timeout=10)
+    while True:
+        p = subprocess.Popen(
+            [
+                "ganache",
+                "-f",
+                poly_url,
+                "-i",
+                "999",
+                "-e",
+                "1000000",
+                "-p",
+                "8545",
+                "-l",
+                "8000000",
+                "-u",
+                admin_user,
+            ],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.STDOUT,
+        )
+
+        try:
+            wait_for_port(port="8545", timeout=10)
+            print("Fork worked")
+            break
+        except:
+            print("Timeout")
+            stop_ganache()
 
 
 def wait_for_port(port, host="localhost", timeout=5.0):
