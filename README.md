@@ -19,3 +19,6 @@ print(pool_instance.getUserAccountData(test_addr))
 
 ## More Info
 Aave provides extensive documentation on their contracts which can be found [here](https://docs.aave.com/developers/getting-started/v3-overview)
+
+## Dev
+Tests are run on a local node with Anvil, which is part of the forge family. More info about forge [here](https://github.com/foundry-rs/foundry)
