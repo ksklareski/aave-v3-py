@@ -1,4 +1,4 @@
-import ganache
+import anvil
 from web3 import Web3
 
 
@@ -8,8 +8,8 @@ class BaseTest:
     weth_addr = None
     admin_user = None
 
-    def start_ganache(self):
-        ganache.start_ganache()
+    def start_anvil(self):
+        anvil.start_anvil()
 
         self.w3: Web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 
@@ -19,9 +19,9 @@ class BaseTest:
         self.weth_addr = self.w3.toChecksumAddress(
             "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
         )
-        self.admin_user = ganache.admin_user
+        self.admin_user = anvil.admin_user
 
-    def stop_ganache(self):
-        ganache.stop_ganache()
+    def stop_anvil(self):
+        anvil.stop_anvil()
 
         self.w3 = None

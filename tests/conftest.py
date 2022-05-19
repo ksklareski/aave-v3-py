@@ -5,8 +5,8 @@ from base_test import BaseTest
 @pytest.fixture(scope="session")
 def bt():
     bt = BaseTest()
-    bt.start_ganache()
+    bt.start_anvil()
 
     yield bt
 
-    bt.stop_ganache()
+    bt.stop_anvil()

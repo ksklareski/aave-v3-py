@@ -11,7 +11,7 @@ p = None
 admin_user = None
 
 
-def start_ganache():
+def start_anvil():
     global p
     global admin_user
 
@@ -19,7 +19,7 @@ def start_ganache():
     poly_url = os.environ["POLY_URL"]
     admin_user = os.environ["ADMIN_USER"]
 
-    # Start ganache cli
+    # Start anvil cli
     while True:
         p = subprocess.Popen(
             [
@@ -47,7 +47,7 @@ def start_ganache():
             break
         except:
             print("Timeout")
-            stop_ganache()
+            stop_anvil()
 
 
 def wait_for_port(port, host="localhost", timeout=5.0):
@@ -73,6 +73,6 @@ def wait_for_port(port, host="localhost", timeout=5.0):
                 ) from ex
 
 
-def stop_ganache():
+def stop_anvil():
     global p
     os.kill(p.pid, signal.SIGTERM)
